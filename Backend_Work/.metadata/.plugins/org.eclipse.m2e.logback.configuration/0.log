@@ -1,0 +1,16 @@
+2023-06-14 23:22:45,695 [Worker-7: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2023-06-14 23:23:14,739 [Worker-5: Importing Maven projects] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.example:SRS_App:0.0.1-SNAPSHOT @ /Users/sankhasubhramondal/Own_Project/Ship Reservation System/Backend_Work/SRS_App_Backend/pom.xml.
+2023-06-14 23:23:35,704 [Worker-6: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2023-06-14 23:24:04,643 [Worker-6: Importing Maven projects] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.example:SRS_App:0.0.1-SNAPSHOT @ /Users/sankhasubhramondal/Own_Project/Ship Reservation System/Backend_Work/SRS_App_Backend/pom.xml.
+2023-06-14 23:24:06,323 [Worker-6: Importing Maven projects] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /SRS_App_Backend/src/main/java
+2023-06-14 23:24:06,327 [Worker-6: Importing Maven projects] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /SRS_App_Backend/src/main/resources
+2023-06-14 23:24:06,331 [Worker-6: Importing Maven projects] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /SRS_App_Backend/src/main/resources
+2023-06-14 23:24:06,334 [Worker-6: Importing Maven projects] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /SRS_App_Backend/src/test/java
+2023-06-14 23:24:06,842 [Worker-6: Importing Maven projects] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Imported and configured 1 project(s) in 4 sec
+2023-06-14 23:24:10,656 [Worker-2: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src/main/resources to target/classes
+2023-06-14 23:24:10,680 [Worker-2: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src/main/resources to target/classes
+2023-06-14 23:24:10,689 [Worker-2: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory /Users/sankhasubhramondal/Own_Project/Ship Reservation System/Backend_Work/SRS_App_Backend/src/test/resources
+2023-06-14 23:24:36,149 [Worker-5: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src/main/resources to target/classes
+2023-06-14 23:24:36,150 [Worker-5: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src/main/resources to target/classes
+2023-06-14 23:24:36,153 [Worker-5: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory /Users/sankhasubhramondal/Own_Project/Ship Reservation System/Backend_Work/SRS_App_Backend/src/test/resources
+2023-06-26 22:50:48,212 [Worker-7: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
