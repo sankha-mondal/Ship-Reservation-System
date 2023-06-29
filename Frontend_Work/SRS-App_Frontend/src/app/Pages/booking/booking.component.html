@@ -1,0 +1,523 @@
+<!-- =========================  :Retrieve All_Booking Operation: Op:1 =========================================-->
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-2"></div>
+
+        <div class="col-8">
+
+            <div class="text-center">
+                <br>
+                <img id="logo" width=230 src="../../../assets/register_logo.png" alt="register_logo.jpg"><br>
+                <h2 class="mt-1">All Reserved Bookings</h2>
+                <div class="container search-box" class="text-center">
+                    <label><b>Search Booking: </b></label>&nbsp;
+                    <label><input type = "text" name="search" [(ngModel)]="searchText_all" placeholder ="Enter here" /></label> <br>
+                </div> 
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>#Id</th>
+                            <th>Booking Id</th>
+                            <th>Your Name</th>
+                            <th>Payment Amount</th>
+                            <th>No of Head-Count</th>
+                            <th>Booking-Date</th>
+                            <th>Delete</th>
+                            <th>Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let books of booking | filter:searchText_all | paginate: {
+                                                                                                itemsPerPage: tableSize,
+                                                                                                currentPage: pageNo,
+                                                                                                totalItems: count
+                                                                                            }; let i=index;">                                                   
+                            <td style="font-weight:bold;">{{i+1}}</td>
+                            <td>{{books.bookingId}}</td>
+                            <td>{{books.pName}}</td>
+                            <td>{{books.paymentAmount}}</td> 
+                            <td>{{books.noOfHeadCount}}</td>  
+                            <td>{{books.bookingDate}}</td> 
+                            <!--=============== Delete Operation ============-->
+                            <td> <button class="btn btn-danger" (click)="delete_Booking(books.bookingId)">Delete</button> </td>
+                            <td>  <!--=========- Button trigger modal for Update : Op:4 =============-->
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal_update_booking" (click)="get_record_for_Booking_update(books)">Update</button>
+                            </td> 
+                        </tr>
+                    </tbody>
+                </table>
+                    <!--=======================================  : Pagination Controls : ===============================================-->
+
+                    <div class="container">
+
+                        <!--======================  : Table Size Controls : ================================-->
+                        <select (change)="on_table_size_change($event)">
+                            <option *ngFor="let size of tableSizes">{{size}}</option>
+                        </select>
+            
+                        <!--======================  : Page Number Controls : ================================-->
+                        <pagination-controls
+                            previousLabel="Prev" nextLabel="Next"
+                            (pageChange)="on_table_data_change($event)">
+                        </pagination-controls>
+
+                    </div> 
+
+            </div>
+
+            <br><br>
+
+        </div>
+
+        <div class="col-1" (click)="admin_home_page()"><i class='fas fa-home' style='font-size:48px;color:rgb(252, 59, 59)'></i></div>
+
+    </div>
+</div><hr>
+
+<!-- ======================================================================================================== -->
+<!--============================= : Booking Retrive by Passenger-Email : Op:2 ========================================-->
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-3"></div>
+        
+        <div class="col-6">
+            <br>
+            <h2 style="text-align:center;">All Booking of <mark>{{this.mail1}}</mark></h2>
+
+            <form #emailRef_Pass="ngForm" (ngSubmit)="get_record_for_Booking_byEmail(emailRef_Pass)">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="mail1" [(ngModel)]="mail1" required placeholder="email@gmail.com"  aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <button class="btn btn-success" type="submit" id="button-addon2" [disabled]="emailRef_Pass.invalid">Retrieve Booking byEmail</button>
+                </div>
+            </form>
+
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>#Id</th>
+                        <th>Booking Id</th>
+                        <th>Your Name</th>
+                        <th>Payment Amount</th>
+                        <th>Booking Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let bookByEmail of booking_byEmail; let i=index;">
+                        <td style="font-weight:bold;">{{i+1}}</td>
+                        <td>{{bookByEmail.bookingId}}</td>
+                        <td>{{bookByEmail.pName}}</td> 
+                        <td>{{bookByEmail.paymentAmount}}</td>
+                        <td>{{bookByEmail.bookingDate}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div> 
+
+    </div> <br>
+</div><hr>
+
+<!-- ===================================================================================================== -->
+<!--===================================== : Modal for Update for Booking : =============================== -->
+
+ <div class="modal fade" id="exampleModal_update_booking" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    
+    <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        
+        <div class="modal-header">
+        <h4>Update Route Details</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+            <div>
+                <form #bookingRef_update="ngForm" (ngSubmit)="update_Booking()">
+                    <label class="model_page">Booking Id: </label>
+                    <input type="text" name="bookingId" class="form-control" [(ngModel)]="bookingId" readonly/><br/>
+                    <label class="model_page">Passenger Name: </label>
+                    <input type="text" name="pName" class="form-control" [(ngModel)]="pName" ngModel required/><br/>
+                    <label class="model_page">Payment Amount: </label>
+                    <input type="text" name="paymentAmount" class="form-control" [(ngModel)]="paymentAmount" ngModel required/><br/>
+                    <label class="model_page">No Of HeadCount: </label>
+                    <input type="text" name="noOfHeadCount" class="form-control" [(ngModel)]="noOfHeadCount" readonly/><br/>
+                    <label class="model_page">Booking Date: </label>
+                    <input type="text" name="bookingDate" ngModel class="form-control" [(ngModel)]="bookingDate" required/><br/>
+                    <input type="submit" class="btn btn-success" value="Click to Update Route Details" [disabled]="bookingRef_update.invalid"/>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    </div>
+</div> <br>
+
+
+<!-- ==================================================================================================== -->
+<!--=========================== :Retrieve Passenger-Email for particular Date: Op:5 =========================-->
+ <div class="container-fluid">
+    <div class="row">
+
+        <div class="col-3"></div>
+        
+        <div class="col-6">
+            <br>
+            <h2 style="text-align:center;">Retrieve Passengers-Email for Particular Date <mark>{{this.jDate}}</mark></h2>
+
+            <form #dateRef_email="ngForm" (ngSubmit)="get_PassEmail_on_JourneyDate(dateRef_email)">
+                <div class="input-group mb-3">
+                    <input type="date" class="form-control" name="jDate" [(ngModel)]="jDate" required placeholder="YYYY-MM-DD"  aria-label="Recipient's username" aria-describedby="button-date">
+                    <button class="btn btn-success" type="submit" id="button-date" [disabled]="dateRef_email.invalid">Retrieve Bookings On Date</button>
+                </div>
+            </form>
+
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>#ID</th>
+                        <th>Passenger Email</th>
+                        <th>Booking Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- <tr *ngFor="let ped of pass_email_date | filter:searchText_email"> -->
+                    <tr *ngFor="let ped of pass_email_date | filter:searchText_email; let i=index;">
+                        <td style="font-weight:bold;">{{i+1}}</td>
+                        <td>{{ped.jdeEmail}}</td>
+                        <td>{{ped.boDate}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div> 
+
+    </div> <br><br>
+</div><hr>
+
+
+<!-- ============================================================================================================= -->
+<!--=============================== : Retrieve Full Booking Info of One Passenger : Op:6 =========================-->
+<div class="container-fluid">
+    <div class="row">
+        
+        <div>
+            <br>
+            <h2 style="text-align:center;">Retrieve Full Booking Details of <mark>{{this.mail2}}</mark></h2>
+
+            <form #emailFullRef_booking="ngForm" (ngSubmit)="get_Full_Booking_Deatil_Of_OnePass(emailFullRef_booking)">
+                <div class="input-group mb-3">
+                    <div class="col-3"></div>
+                    <input type="text" class="form-control" name="mail2" [(ngModel)]="mail2" required placeholder="email@gmail.com" pattern="[a-z0-9]+@gmail.com" aria-label="Recipient's username" aria-describedby="button-date">
+                    <button class="btn btn-success" type="submit" id="button-date" [disabled]="emailFullRef_booking.invalid">Retrieve Full Passenger Details</button>
+                    <div class="col-3"></div>
+                </div>
+
+                <!--====== Validations =====-->
+                <div class="input-group mb-3">
+                    <div class="col-3"></div>
+                    <div *ngIf=" emailFullRef_booking.controls['mail2'].invalid && 
+                            (emailFullRef_booking.controls['mail2'].dirty   ||   emailFullRef_booking.controls['mail2'].touched) ">
+    
+                            <span [hidden]="!emailFullRef_booking.controls['mail2'].errors?.['required']">Mail Id is Required<br></span>
+                            <span [hidden]="!emailFullRef_booking.controls['mail2'].errors?.['pattern']">Follow pattern example@gmail.com<br></span>
+                    </div> <br>
+                    <div class="col-3"></div>
+                </div>
+            </form>
+
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>#ID</th>
+                        <th>Booking Id</th>
+                        <th>Email</th>
+                        <th>Name</th>
+                        <th>Amount</th>
+                        <th>Booking Date</th>
+
+                        <th>Route Id</th>
+                        <th>Journey Date</th>
+                        <th>Journey Time</th>
+
+                        <th>Ship Id</th>
+                        <th>Ship Name</th>
+                        <th>Ship Model</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- <tr *ngFor="let ped of pass_email_date | filter:searchText_email"> -->
+                    <tr *ngFor="let pib of OnePassInfo_Of_Booking | filter:searchText_email; let i=index;">
+                        <td style="font-weight:bold;">{{i+1}}</td>
+                        <td>{{pib.bookingId}}</td>
+                        <td>{{pib.pEmail}}</td>
+                        <td>{{pib.pName}}</td>
+                        <td>{{pib.paymentAmount}}</td>
+                        <td>{{pib.bookingDate}}</td>
+
+                        <td>{{pib.routeId}}</td>
+                        <td>{{pib.journeyDate}}</td>
+                        <td>{{pib.journeyTime}}</td>
+
+                        <td>{{pib.shipId}}</td>
+                        <td>{{pib.shipName}}</td>
+                        <td>{{pib.shipModel}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div> 
+
+</div><br><br><hr>
+
+<!-- ============================================================================================================= -->
+<!--=========== :Retrieve Passenger-Email on particular Ship-Details on particular Journey-Date: Op:11 ============-->
+
+<div class="container-fluid">
+    <div class="row">
+        
+        <div>
+            <br>
+            <h3 style="text-align:center;">View details of passengers traveling on a particular Ship <mark>{{this.sName1}}</mark> on a particular Date <mark>{{this.jDate1}}</mark></h3>
+
+            <form #jdate_sName_Ref="ngForm" (ngSubmit)="get_Pass_Details_on_jDate_shipName(jdate_sName_Ref)">
+                <div class="input-group mb-3">
+                    <div class="col-3"></div>
+                    <input type="date" class="form-control" name="jDate1" [(ngModel)]="jDate1" required placeholder="YYYY-MM-DD" aria-label="Recipient's username" aria-describedby="button-date">
+                    <input type="text" class="form-control" name="sName1" [(ngModel)]="sName1" required placeholder="Ship Name.." aria-label="Recipient's username" aria-describedby="button-date">
+
+                    <button class="btn btn-success" type="submit" id="button-date" [disabled]="jdate_sName_Ref.invalid">Retrieve by Journey-Date & Ship-Name</button>
+                    <div class="col-3"></div>
+                </div>
+
+                <!--====== Validations =====-->
+                <div class="input-group mb-3">
+                    <div class="col-3"></div>
+                    <div *ngIf=" jdate_sName_Ref.controls['jDate1'].invalid && 
+                            (jdate_sName_Ref.controls['jDate1'].dirty   ||   jdate_sName_Ref.controls['jDate1'].touched) ">
+    
+                            <span [hidden]="!jdate_sName_Ref.controls['jDate1'].errors?.['required']">Journey Date is Required<br></span>
+                    </div> <br>
+                    <div *ngIf=" jdate_sName_Ref.controls['sName1'].invalid && 
+                            (jdate_sName_Ref.controls['sName1'].dirty   ||   jdate_sName_Ref.controls['sName1'].touched) ">
+    
+                            <span [hidden]="!jdate_sName_Ref.controls['sName1'].errors?.['required']">Ship Name is Required<br></span>
+                    </div> <br>
+                    <div class="col-3"></div>
+                </div>
+            </form>
+
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>#ID</th>
+                        <th>Booking ID</th>
+                        <th>Passenger Email</th>
+                        <th>Name</th>
+                        <th>Booking Date</th>
+                        <th>No Of HCs</th>
+                        <th>Payable Amount</th>
+                        <th>Phone No</th>
+                        <th>Address</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- <tr *ngFor="let ped of pass_email_date | filter:searchText_email"> -->
+                    <tr *ngFor="let pdjs of Pass_Details_on_jDate_shipName | filter:searchText_email; let i=index;">
+                        <td style="font-weight:bold;">{{i+1}}</td>
+                        <td style="font-weight:bold;">{{pdjs.bookingId}}</td>
+                        <td>{{pdjs.pEmail}}</td>
+                        <td>{{pdjs.pName}}</td>
+                        <td>{{pdjs.bDate}}</td>
+                        <td>{{pdjs.onOfHC}}</td>
+                        <td>{{pdjs.payableAmount}}</td>
+                        <td>{{pdjs.pPhone}}</td>
+                        <td>{{pdjs.pAddress}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div> 
+
+</div>
+
+
+<!-- ============================================================================================================= -->
+<!-- ============================================================================================================= -->
+
+
+    </div> <br><br><br><hr>
+    
+        <div class="container" id="head_count">
+            <div class="row row-cols">
+                <div class="col">
+                    <br>
+                        <button type="button" class="btn btn-primary btn-lg" (click)="goto_headcount_page()">
+                            Head Count<i style='font-size:24px' class='fas'>&#xf061;</i>
+                        </button>
+                </div>      
+            </div>
+        </div>
+    <br>
+<hr>
+
+<!-- ====================================================================================================================== -->
+<!-- ====================================================================================================================== -->
+<!-- ============================================== : Head Count of Booking : ============================================= -->
+<!-- ====================================================================================================================== -->
+<!-- ====================================================================================================================== -->
+
+
+<!-- ====================== :Retrieve All Head-Count Operation: Op:7 ===================== -->
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-3"></div>
+
+        <div class="col-6">
+
+            <div class="text-center">
+                <img id="logo" width=230 src="../../../assets/register_logo.png" alt="register_logo.jpg"><br>
+                <h2 class="mt-1">All Reserved Head Count</h2>
+                <div class="container search-box" class="text-center">
+                    <label><b>Search Head Count: </b></label>&nbsp;
+                    <label><input type = "text" name="search" [(ngModel)]="searchText_headCount" placeholder ="Enter here" /></label> <br>
+                </div> 
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>#ID</th>
+                            <th>Name</th>
+                            <th>Payment Amount</th>
+                            <th>Booking Date</th>
+                            <th>Delete</th>
+                            <th>Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let hc of headCount | filter:searchText_headCount">
+                            <td>{{hc.hcId}}</td>
+                            <td>{{hc.hcName}}</td>
+                            <td>{{hc.hcAge}}</td>   
+                            <td>{{hc.hcGender}}</td> 
+                            <!--========:Delete Operation of Head-Count: Op:8===========-->
+                            <td><button class="btn btn-warning" (click)="delete_HeadCount(hc.hcId)">Delete</button></td>
+                            <td>  <!--============ :Update Operation of Head_Count: Op:9 =============-->
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal_update_headCount" (click)="get_record_for_HeadCount_update(hc)">Update</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br>
+
+        </div>
+
+    </div>
+</div><hr>
+
+<!--=========================================================================================================-->
+<!--===================================== : Modal for Update for Head-Count : ===============================-->
+<div class="modal fade" id="exampleModal_update_headCount" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    
+    <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        
+        <div class="modal-header">
+        <h4>Update Head Count Details</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+            <div>
+                <form #headCountRef_update="ngForm" (ngSubmit)="update_HeadCount()">
+                    <label class="model_page">Head Count Id: </label>
+                    <input type="text" name="hcId" class="form-control" [(ngModel)]="hcId" readonly/><br/>
+
+                    <label class="model_page">Name: </label>
+                    <input type="text" name="hcName" class="form-control" [(ngModel)]="hcName" ngModel required/>
+                    <div *ngIf=" headCountRef_update.controls['hcName'].invalid && 
+                            (headCountRef_update.controls['hcName'].dirty   ||   headCountRef_update.controls['hcName'].touched) ">
+    
+                            <span [hidden]="!headCountRef_update.controls['hcName'].errors?.['required']">Head Counter Name is Required<br></span>
+                    </div> <br>
+
+                    <label class="model_page">Age: </label>
+                    <input type="number" name="hcAge" class="form-control" [(ngModel)]="hcAge" ngModel required min="6"/>
+                    <div *ngIf=" headCountRef_update.controls['hcAge'].invalid && 
+                            (headCountRef_update.controls['hcAge'].dirty   ||   headCountRef_update.controls['hcAge'].touched) ">
+    
+                            <span [hidden]="!headCountRef_update.controls['hcAge'].errors?.['required']">Head Counter Age is Required<br></span>
+                            <span [hidden]="!headCountRef_update.controls['hcAge'].errors?.['min']">Head Counter Age should be greater than 5<br></span>
+                    </div> <br>
+
+                    <label class="model_page">Gender: </label>
+                    <input type="text" name="hcGender" ngModel class="form-control" [(ngModel)]="hcGender" required pattern="[FE]*MALE"/>
+                    <div *ngIf=" headCountRef_update.controls['hcGender'].invalid && 
+                            (headCountRef_update.controls['hcGender'].dirty   ||   headCountRef_update.controls['hcGender'].touched) ">
+    
+                            <span [hidden]="!headCountRef_update.controls['hcGender'].errors?.['required']">Please put your Gender<br></span>
+                            <span [hidden]="!headCountRef_update.controls['hcGender'].errors?.['pattern']">Enter MALE or FEMALE<br></span>
+                    </div> <br>
+
+                    <input type="submit" class="btn btn-success" value="Click to Update Head-Count Details" [disabled]="headCountRef_update.invalid"/>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    </div>
+</div> <br>
+
+<!--==========================================================================================================-->
+<!--========================== :Retrieve Head Count by Booking ID: Op:10 ====================================-->
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-3"></div>
+        
+        <div class="col-6">
+            <h2 style="text-align:center;">All Head-Count of {{this.bookId_hc}}</h2>
+
+            <form #bookingRef_Id="ngForm" (ngSubmit)="get_record_for_HeadCount_byBookingId(bookingRef_Id)">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="bookId_hc" [(ngModel)]="bookId_hc" required placeholder="Booking Id"  aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <button class="btn btn-success" type="submit" id="button-addon2" [disabled]="bookingRef_Id.invalid">Retrieve Head-Count for Single Booking-ID</button>
+                </div>
+                <i type="button" onClick="window.location.href=window.location.href" style="font-size:24px" class="fa">&#xf021;</i>
+            </form>
+
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>#ID</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Delete</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let hcbi of headCount_byBookId; let i=index;">
+                        <td style="font-weight:bold;">{{hcbi.hcId}}</td>
+                        <td>{{hcbi.hcName}}</td> 
+                        <td>{{hcbi.hcAge}}</td>
+                        <td>{{hcbi.hcGender}}</td>
+                        <!--========:Delete Operation of Head-Count: Op:8===========-->
+                        <td><button class="btn btn-warning" (click)="delete_HeadCount(hcbi.hcId)">Delete</button></td>
+                        <td>  <!--============ :Update Operation of Head_Count: Op:9 =============-->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal_update_headCount" (click)="get_record_for_HeadCount_update(hcbi)">Update</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div> 
+
+    </div> <br>
+</div><br><br>
+
+<!--=========================================================================================================================================-->
+<!--=======================================================================================================================================-->
+<!--========================================================================================================================================-->
+
+

@@ -1,0 +1,51 @@
+.container{
+    background-color: rgb(163, 221, 244);
+ }
+th, h2, label { 
+    color: rgb(7, 0, 0);
+    font-weight: bold;
+}
+img {
+    margin-left: 28%;
+    display: flex;
+    justify-content: center;
+    border: 2px solid black;
+    color: rgb(243, 237, 237);
+}
+h2 {
+    color: rgb(251, 82, 15);
+    /* background-color: rgb(34, 99, 116); */
+}
+#disable-div {
+    display: none;
+}
+span {
+    color: rgb(235, 12, 12);
+    font-weight: bold;
+}
+label {
+    font-size: large;
+}
+th {
+    justify-content: center;
+    color: brown;
+    background-color: rgb(243, 182, 14);
+    font-size: larger;
+}
+td, th {
+    text-align: center;
+}
+button {
+    display: flex;
+    justify-content: center;
+}
+.d-grid {
+    background-color: green;
+}
+#hcInput {
+    background-color: rgb(104, 206, 240);
+}
+#hcId {
+    font-size: larger;
+    font-weight: bolder;
+}

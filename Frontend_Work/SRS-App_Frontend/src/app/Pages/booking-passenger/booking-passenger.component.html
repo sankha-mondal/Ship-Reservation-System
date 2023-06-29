@@ -1,0 +1,223 @@
+<!-- =========================  :Retrieve All_Booking Operation: Op:1 =========================================-->
+
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- <div class="col-1"></div> -->
+        <div class="col-1" (click)="goto_ticket_page()"><i class='fas fa-home' style='font-size:35px;color:rgb(252, 59, 59)'></i></div>
+
+
+        <div class="col-12">
+
+            <div class="text-center">
+                
+                <img src="https://phoneky.co.uk/thumbs/screensavers/down/misc/mailsendin501309.gif" alt="" height="200" width="300" [ngStyle]="styProperty_email">
+                
+                <h2 class="mt-1">My Bookings</h2>
+                <div class="container search-box" class="text-center">
+                    <label><b>Search Booking: </b></label>&nbsp;
+                    <label><input type = "text" name="search" [(ngModel)]="searchText" placeholder ="Enter here" /></label> <br>
+                </div> 
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>#Id</th>
+                            <th>Booking Id</th>
+                            <th>Your Name</th>
+                            <th>Payment Amount</th>
+                            <th>Booking Date</th>
+                            <th>HC</th>
+
+                            <th>Journey-Date</th>
+                            <th>Journey-Time</th>
+
+                            <th>Add HCs</th>
+                            <th>Head-Counts</th>
+
+                            <th>Booking Receipt</th>
+                            <th>HCs Receipt</th>
+
+                            <!-- <th>HC-Name</th>
+                            <th>HC-Age</th>
+                            <th>HC-Gender</th> -->
+                            
+                            <th>Delete</th>
+                            <th>Get Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let books of booking_ByEmail | filter:searchText | paginate: {
+                                                                                                    itemsPerPage: tableSize,
+                                                                                                    currentPage: pageNo,
+                                                                                                    totalItems: count
+                                                                                                }; let i=index;">                                                   
+                            <td style="font-weight:bold;">{{i+1}}</td>
+                            <td style="font-weight:bold;color: blue;">{{books.bookingId}}</td>
+                            <td>{{books.pName}}</td>
+                            <td>{{books.paymentAmount}}</td>   
+                            <td>{{books.bookingDate}}</td> 
+                            <td>{{books.noOfHeadCount}}</td>
+
+                            <td class="inside1">{{books.ship_Schedule.journeyDate}}</td>
+                            <td class="inside2">{{books.ship_Schedule.journeyTime}}</td>
+
+                            <td><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal_add_headcount" (click)="add_HeadCount_By_BookingId(books.bookingId, books.noOfHeadCount)">Add</button></td>
+
+                            <!-- <td>
+                                <tr *ngFor="let hc of books.head_count">
+                                    <td>{{hc.hcName}}000000</td>
+                                </tr>
+                            </td>
+                            <td>
+                                <tr *ngFor="let hc of books.head_count">
+                                    <td>{{hc.hcAge}}000000</td>
+                                </tr>
+                            </td>
+                            <td>
+                                <tr *ngFor="let hc of books.head_count">
+                                    <td>{{hc.hcGender}}000000</td>
+                                </tr>
+                            </td> -->
+
+                            <!-- <td>{{books.head_Count.hcName}}000000</td>
+                            <td>{{books.head_Count.hcAge}}</td>
+                            <td>{{books.head_Count.hcGender}}******</td> -->
+
+                            <td><button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal_view_headcount" (click)="get_HeadCount_By_BookingId(books.bookingId)">View</button></td>
+                            <td><button class="btn btn-info" (click)="get_Date_Booking_Receipt(books.bookingId)">Download</button></td>
+                            <td><button class="btn btn-info" (click)="get_Data_HC_Receipt(books.bookingId)">Download</button></td>
+                            <!--=============== Delete Operation ============-->
+                            <td><button class="btn btn-danger" (click)="delete_Booking(books.bookingId, books.noOfHeadCount)">Delete</button> </td>
+                            <!--=============== Email Operation ============-->
+                            <td><button class="btn btn-outline-warning" (click)="get_Email(books.bookingId)" style="font-weight:bolder;">Email</button> </td>
+                        </tr>
+                    </tbody>
+                </table>
+                    <!--=======================================  : Pagination Controls : ===============================================-->
+
+                    <div class="container">
+
+                        <!--======================  : Table Size Controls : ================================-->
+                        <select (change)="on_table_size_change($event)">
+                            <option *ngFor="let size of tableSizes">{{size}}</option>
+                        </select>
+        
+                        <!--======================  : Page Number Controls : ================================-->
+                        <pagination-controls
+                            previousLabel="Prev" nextLabel="Next"
+                            (pageChange)="on_table_data_change($event)">
+                        </pagination-controls>
+
+                    </div>
+            </div>
+
+            <br><br>
+
+        </div>
+
+    </div>
+</div><hr>
+
+
+<!--=========================  Modal for Add_headCount ===============================-->
+<div class="modal fade" id="exampleModal_add_headcount" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        
+        <div class="modal-header">
+        <h4>Add Head-Counts</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+            <div>
+                <!-- ===================: Insert Head Counts :================== -->
+                <div id="hcInput">
+                    <br>
+                    <!-- To make individual form for one-one head-count -->
+                    <!-- <div *ngFor="let hcInput of fakeArray; let i = index"> -->
+                        <div class="input-group input-group-sm">
+                            <form #hcRef_store="ngForm" (ngSubmit)="store_HeadCount(hcRef_store)"> 
+                                <div class="row">
+
+                                    <!-- <div class="col-md-1"><span id="hcId">&nbsp;{{i+1}}.</span></div> -->
+                                    <div class="col-md-5"><input type="text" name="hcName" ngModel required class="form-control" placeholder="Enter HC-Name.."></div>
+                                    <div class="col-md-2"><input type="number" name="hcAge" ngModel required class="form-control" placeholder="Age.."></div>
+                                    <div class="col-md-2"><input type="text" name="hcGender" ngModel required class="form-control" placeholder="Gender.."></div>
+
+                                    <div class="col-md-2"><button class="btn btn-success" type="submit" id="button-addon1" [disabled]="hcRef_store.invalid" data-bs-dismiss="modal">Add HC</button></div>
+
+                                </div>
+
+                            </form>
+                            
+                        </div>
+                    <!-- </div> -->
+                    <br>
+                </div>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end"><br>
+                    <button class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    </div>
+</div>
+
+
+<!--=========================  Modal for View_headcount ===============================-->
+<div class="modal fade" id="exampleModal_view_headcount" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        
+        <div class="modal-header">
+        <h4>List Of Head-Count</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+            <div>
+                <form #heatCountRef_view="ngForm">
+                    
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>#Id</th>
+                                <th>HC-Name</th>
+                                <th>HC-Age</th>
+                                <th>HC-Gender</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let hc of headCount_byBookId; let i=index;">                                                   
+                                <td style="font-weight:bold;">{{i+1}}</td>
+                              
+                                <td class="inside1">{{hc.hcName}}</td>
+                                <td>{{hc.hcAge}}</td>   
+                                <td>{{hc.hcGender}}</td> 
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button class="btn btn-success" data-bs-dismiss="modal">Okey</button>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+
+    </div>
+    </div>
+</div>
+
+
+
+
+<!-- ===================================================================================================== -->
+<!-- ===================================================================================================== -->
+
+
+

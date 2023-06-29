@@ -1,0 +1,21 @@
+span {
+    color: rgb(250, 13, 13);
+    font-weight: bold;
+}
+.container-fluid {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("../../../assets/login_bg.png");
+}
+#logo {
+    border-radius: 50%;
+}
+#url {
+    color: white;
+}
+#login {
+    color: rgb(245, 245, 161);
+}
+label {
+    font-weight: bolder;
+}

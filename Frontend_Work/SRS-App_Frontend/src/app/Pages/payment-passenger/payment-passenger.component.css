@@ -1,0 +1,22 @@
+#basic-addon1, .submit {
+    font-size: x-large;
+    font-weight: bold;
+}
+#addon1 {
+    font-size: x-large;
+    font-weight: bold;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: red;
+    display: flex;
+    text-align: right;
+}
+.col, .col-1 {
+    border-color: gainsboro;
+}
+span {
+    font-weight: bold;
+}
+.validation {
+    color: rgb(233, 12, 12);
+    font-weight: bold;
+}

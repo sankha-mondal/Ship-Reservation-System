@@ -1,0 +1,21 @@
+#logo {
+    border-radius: 50%;
+}
+i {
+    justify-content: center;
+    display: flex;
+}
+#head_count {
+    justify-content: center;
+    display: flex;
+}
+mark {
+    color: brown;
+}
+span {
+    font-weight: bold;
+    color: brown;
+}
+.btn {
+    font-weight: bold;
+}
