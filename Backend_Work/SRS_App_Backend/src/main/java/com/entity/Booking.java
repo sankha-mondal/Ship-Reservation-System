@@ -31,8 +31,8 @@ public class Booking {
 	private String bookingDate;
 	
 	@OneToOne
-	@JoinColumn(name = "ship_sch_id")
-	private Ship_Schedule ship_Schedule;
+	@JoinColumn(name = "ship_sch_id")     //  One Booking has one ship_Schedule
+	private Ship_Schedule ship_Schedule;    //  "ship_sch_id" column will be created in "Booking" table
 	
 	@Column(name="noOfHeadCount")
 	private int noOfHeadCount;
