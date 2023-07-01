@@ -177,9 +177,9 @@ public class Passenger_Controller {
 		  
 			//  Retrieve Message by Email & password | Login Operation :-   Op: 7
 			
-			//  http://localhost:8585/passenger/findPassengerByEmail_Password
+			//  http://localhost:8585/passenger/login
 		  
-			@PostMapping(value = "findPassengerByEmail_Password")
+			@PostMapping(value = "login")
 			public String findPassengerByEmail_Pass(@RequestBody Passenger passenger) {
 				
 				System.out.println("Controller: "+passenger.getpEmail());
