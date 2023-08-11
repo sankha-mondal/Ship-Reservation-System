@@ -13,7 +13,7 @@ public class SrsAppApplication {
 	
 		/*
 		 * Dependencies: Spring web, JPA, jdbc, MySQL, Devtools,   
-		 * 				 pdfbox, jstl, servlet-api,  starter-mail
+		 * 	         pdfbox, jstl, servlet-api,  starter-mail
 		 */
 
 }
