@@ -87,14 +87,14 @@ public class Passenger_Controller {
 //		  @PostMapping("/store")
 //		  public ResponseEntity<Passenger> storePassenger(@RequestBody Passenger passReq) { 
 //			  Passenger _passenger = passengerRepo.save(new Passenger(passReq.getpEmail(),
-//					  												  passReq.getpName(), 
-//					  												  passReq.getpPhone(),
-//					  												  passReq.getpPassword(),
-//					  												  passReq.getpRole(),
-//					  												  passReq.getpAddress(),					  												    
-//					  												  passReq.getUrl(),
-//					  												  passReq.getBooking()
-//					  												  ));
+//					  passReq.getpName(), 
+//					  passReq.getpPhone(),
+//					  passReq.getpPassword(),
+//					  passReq.getpRole(),
+//					  passReq.getpAddress(),					  												    
+//					  passReq.getUrl(),
+//					  passReq.getBooking()
+//					  ));
 //			  					
 //		    return new ResponseEntity<>(_passenger, HttpStatus.CREATED);
 //		  }
