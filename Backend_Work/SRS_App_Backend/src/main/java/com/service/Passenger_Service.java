@@ -45,31 +45,31 @@ public class Passenger_Service {
 	}	
 	
 	
-// ==========================================================================================
+// ===========================================================================================================================================
 	
-			//  Retrieve Message by Email & password | Login Operation :-   Op: 7
-	
-			public String findPassengerByEmail_Pass(Passenger passenger) {
-				String email = passenger.getpEmail();
-				String password = passenger.getpPassword();
-				
-				Optional<Passenger> op = passengerRepo.findById(passenger.getpEmail());
-				System.out.println("**************************"+op);
-				
-					if(op.isPresent()) {
-						Passenger p = op.get();
-						
-						if(p.getpPassword().equals(passenger.getpPassword())) {
-							return "WELCOME";
-						} else {
-							return "Password may be worng";
-						}
-					} else {
-						return "Email or Password may be worng";
-					}
-			}
+	//  Retrieve Message by Email & password | Login Operation :-   Op: 7
 
-// =======================================================================================================
+	public String login(Passenger passenger) {
+		String email = passenger.getpEmail();
+		String password = passenger.getpPassword();
+		
+		Optional<Passenger> op = passengerRepo.findById(passenger.getpEmail());
+		System.out.println("**************************"+op);
+		
+		if(op.isPresent()) {
+			Passenger p = op.get();
+			
+			if(p.getpPassword().equals(passenger.getpPassword())) {
+				return "WELCOME";
+			} else {
+				return "Password may be worng";
+			}
+		} else {
+			return "Email or Password may be worng";
+		}
+	}
+
+// ==========================================================================================================================================
 
 			public void generateBookingReceipt(int bookingId, HttpServletResponse response) throws IOException {
 		        
