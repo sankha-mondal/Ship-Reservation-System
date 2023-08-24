@@ -132,8 +132,8 @@ public class Booking_Cotroller {
 	  
 	  @PostMapping("/store/{pEmail}/{ship_sch_id}")
 	  public ResponseEntity<Booking> createBooking( @PathVariable(value = "pEmail") String pEmail,
-													@PathVariable(value = "ship_sch_id") int ship_sch_id,
-													@RequestBody Booking bookingReq) {
+							@PathVariable(value = "ship_sch_id") int ship_sch_id,
+							@RequestBody Booking bookingReq) {
 		  
 		  Booking booking = passRepo.findById(pEmail).map(passenger -> {
 			  passenger.getBooking().add(bookingReq);
@@ -159,7 +159,7 @@ public class Booking_Cotroller {
 	  
 	  @PutMapping("/update/{bookingId}")
 	  public ResponseEntity<Booking> updateBooking(@PathVariable("bookingId") int bookingId, 
-			  									   @RequestBody Booking bookingReq) {
+			  				@RequestBody Booking bookingReq) {
 		  
 	    Booking _booking = bookingRepo.findById(bookingId)
 	        .orElseThrow(() -> new ResourceNotFoundException("BookId " + bookingId + "not found"));
@@ -249,16 +249,16 @@ public class Booking_Cotroller {
 		
 //======================================================================================================================================
 
-		  //  Retrieve Booking Date for Email-Sending : Op:9  
+	  //  Retrieve Booking Date for Email-Sending : Op:9  
+	  
+	  //  http://localhost:8585/book/get_Date_Booking_for_Email/{bookingId}
+	  
+	  @GetMapping(value = "get_Date_Booking_for_Email/{bookingId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	  public List<Res_Data_Booking_Receipt> get_Date_Booking_for_Email(@PathVariable("bookingId") int bookingId) {
 		  
-		  //  http://localhost:8585/book/get_Date_Booking_for_Email/{bookingId}
+		  return bookingService.get_Date_Booking_for_Email(bookingId);
 		  
-		  @GetMapping(value = "get_Date_Booking_for_Email/{bookingId}", produces = MediaType.APPLICATION_JSON_VALUE)
-		  public List<Res_Data_Booking_Receipt> get_Date_Booking_for_Email(@PathVariable("bookingId") int bookingId) {
-			  
-			  return bookingService.get_Date_Booking_for_Email(bookingId);
-			  
-		  }
+	  }
 		  
 			
 //======================================================================================================================================
