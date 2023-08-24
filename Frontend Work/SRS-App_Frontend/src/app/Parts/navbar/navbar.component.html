@@ -1,0 +1,50 @@
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #22aaf4;">
+    <div class="container-fluid">
+      <img [routerLink]="root" src="../../../assets/ship_logo.jpeg" alt="" width="40" height="40" class="d-inline-block align-text-top">
+      <!-- <a class="navbar-brand" [routerLink]="root">&nbsp;&nbsp;SRS</a> -->
+      <a class="navbar-brand" (click)="refresh_page()">&nbsp;&nbsp;SRS</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+              <a class="nav-link active" aria-current="page" id="home" (click)="refresh_page()">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" id="home" (click)="goto_aboutUs_page()">About Us</a>
+        </li>
+          <!-- <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+          </li> -->
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                &nbsp; Dashboard
+              </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><button class="dropdown-item" (click)="goto_login_page()" [disabled]="f_login" (click)="login_disable_1st()"><b>Login</b></button></li>
+              <li><button class="dropdown-item" (click)="goto_register_page()" [disabled]="f_reg">Register</button></li>
+              <li><button class="dropdown-item" (click)="goto_profile_page()">Profile</button></li>
+              <li><hr class="dropdown-divider"></li>
+              <li style="background-color:rgb(98, 185, 240);">
+                  <button class="dropdown-item" [disabled]="f_logout" (click)="logout()">
+                      <i class='fas fa-power-off' style='font-size:17px'></i>&nbsp;
+                      <b style="font-size:large;">Logout</b>
+                  </button>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+              <input type="button" value="Admin" class="btn btn-link" (click)="admin_home_page()" [disabled]="flag_admin"/>
+          </li>
+          <li class="nav-item">
+            <input type="button" value="Passenger" class="btn btn-link" (click)="passenger_home_page()" [disabled]="flag_passenger"/>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+  </nav>
+
+  

@@ -1,0 +1,89 @@
+<br>
+<div class="d-grid gap-2 col-6 mx-auto">
+    <button class="btn btn-primary" type="button" (click)="goto_booking_passenger()">My Bookings</button>
+</div>
+
+<div class="container">
+    <div class="row">
+
+            <form #sourDesti_Ref_store="ngForm" (ngSubmit)="find_ships_name_sehedule(sourDesti_Ref_store)">  <!-- Template DF --><br>
+            
+                <div class="row">
+                    <!-- Source Point field -->
+                    <div class="col-sm-5">
+                        <label>Source Point:  </label>
+                        <input type="text" class="form-control" name="sourcePoint" ngModel required/>
+                        <div *ngIf=" sourDesti_Ref_store.controls['sourcePoint'].invalid && 
+                                    (sourDesti_Ref_store.controls['sourcePoint'].dirty   ||   sourDesti_Ref_store.controls['sourcePoint'].touched) ">
+    
+                                <span [hidden]="!sourDesti_Ref_store.controls['sourcePoint'].errors?.['required']">Source Point is required<br></span>
+                        </div> 
+                    </div>
+    
+                    <!-- Destination Point field -->
+                    <div class="col-sm-5">
+                        <label>Destination Point:  </label>
+                        <input type="text" class="form-control" name="destinationPoint" ngModel required/>
+                        <div *ngIf=" sourDesti_Ref_store.controls['destinationPoint'].invalid && 
+                                    (sourDesti_Ref_store.controls['destinationPoint'].dirty   ||  sourDesti_Ref_store.controls['destinationPoint'].touched) ">
+    
+                                <span [hidden]="!sourDesti_Ref_store.controls['destinationPoint'].errors?.['required']">Destination Point is required<br></span>
+                        </div> <br>
+                    </div>
+
+                    <div class="col-md-2">
+                        <br>
+                        <button type="submit" class="btn btn-primary" [disabled]="sourDesti_Ref_store.invalid">Search</button>
+                    </div>
+
+                </div>    
+            </form>
+
+    </div>
+</div> <br><br>
+
+
+<!-- ===================================================================================================== -->
+
+
+
+<div class="container">
+    <div class="row">
+        <table class="table table-hover">
+            <tr>
+                <th>#id</th>
+                <th>Ship Name</th>
+                <th>Ship Model</th>
+                <!-- <th>Ship Capacity</th> -->
+                <!-- <th>Ship Resv Capacity</th> -->
+                <th>Rate</th>
+
+                <th>Journey Date</th>
+                <th>Journey Time</th>
+                <th>Seat Availability</th>
+                <th>Add Booking</th>
+            </tr>
+            <tr *ngFor="let ss of ship_details_schedule;let i=index"> 
+                <td style="font-weight:bold;">{{i+1}}.</td>
+                <td style="color: blue;font-weight:bold;">{{ss.shipName}}</td>
+                <td>{{ss.shipModel}}</td>
+                <!-- <td>{{ss.shipCapacity}}</td> -->
+                <!-- <td>{{ss.shipResCapacity}}</td> -->
+                <td style="color:rebeccapurple;font-weight:bold;">{{ss.perKmRate}}</td>
+
+                <td style="font-weight:bold;">{{ss.journeyDate}}</td>
+                <td style="font-weight:bold;">{{ss.journeyTime}}</td>
+                <td>{{ss.seatAvailability}}</td> 
+                <div class="d-grid gap-2 d-md-blocks">            
+                    <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal_Add_Booking" (click)="goto_booking(ss.ssId, ss.perKmRate, ss.seatAvailability)" style="font-weight:bold;">Book</button> -->
+                    <button type="button" class="btn btn-success" (click)="goto_payment_page(ss.ssId, ss.perKmRate, ss.seatAvailability)" style="font-weight:bold;">Book</button>
+
+                </div>
+            </tr>
+            <br>
+        </table>
+
+        
+
+<!-- ===================================================================================================== -->
+<!-- ===================================================================================================== -->

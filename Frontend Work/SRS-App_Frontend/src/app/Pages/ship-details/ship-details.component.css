@@ -1,0 +1,56 @@
+th {
+    justify-content: center;
+    color: brown;
+    background-color: rgb(243, 182, 14);
+    font-size: larger;
+}
+.container-fluid {
+    /* background-repeat: no-repeat;
+    background-size: cover; */
+    background-image: url("../../../assets/ship_details.png");
+}
+.in_page, td, button{
+    color: white;
+    font-weight: bold;
+    font-size: large;
+}
+h2 {
+    color: white;
+    font-weight: bold;
+}
+tr:hover {
+    background-color: rgb(135, 184, 227);
+}
+#logo {
+    border-radius: 50%;
+}
+th {
+    justify-content: center;
+    color: rgb(174, 45, 45);
+    background-color: rgb(243, 182, 14);
+    font-size: larger;
+}
+span {
+    color: rgb(234, 18, 18);
+    font-weight: bold;
+}
+#logo {
+    border-radius: 50%;
+}
+.in_page, td, button{
+    color: white;
+    font-weight: bold;
+    font-size: large;
+}
+h2 {
+    color: white;
+    font-weight: bold;
+}
+tr:hover {
+    background-color: rgb(135, 184, 227);
+}
+.model_page {
+    font-size: large;
+    font-weight: bold;
+}
+

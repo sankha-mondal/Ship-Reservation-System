@@ -1,0 +1,201 @@
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-1" (click)="admin_home_page()"><i class='fas fa-home' style='font-size:38px;color:rgb(214, 223, 245)'></i></div>
+
+        <div class="col-6 offset-2">
+
+            <div class="text-center">
+                <br>
+                <img id="logo" width=230 src="../../../assets/register_logo.png" alt="register_logo.jpg"><br>
+                <h2 class="mt-1">Store Ship Details</h2>
+            </div>
+
+            <form #shipRef_store="ngForm" (ngSubmit)="store_ShipDetails(shipRef_store)">  <!-- Template DF -->
+                <!-- <label>PId </label>
+                <input type="number" name="pid" ngModel required placeholder="Use random number"/><br/> -->
+
+                <!-- shipId field -->
+                <label class="in_page">Ship Id:  </label>
+                <input type="text" class="form-control" name="shipId" ngModel required minlength="4" placeholder="S0.." pattern="[S]+[0]+[0-9]*"/>
+                <div *ngIf=" shipRef_store.controls['shipId'].invalid && 
+                            (shipRef_store.controls['shipId'].dirty   ||   shipRef_store.controls['shipId'].touched) ">
+
+                        <span [hidden]="!shipRef_store.controls['shipId'].errors?.['minlength']">Ship Id must be contain 4 characters<br></span>
+                        <span [hidden]="!shipRef_store.controls['shipId'].errors?.['required']">Ship Id is required<br></span>
+                        <span [hidden]="!shipRef_store.controls['shipId'].errors?.['pattern']">Ship Id pattern must be matched with S0..</span>
+                </div> <br>
+
+                <!-- shipName field-->
+                <label class="in_page">Ship Name: </label>
+                <input type="text" class="form-control" name="shipName" ngModel required/>
+                <div *ngIf=" shipRef_store.controls['shipName'].invalid && 
+                            (shipRef_store.controls['shipName'].dirty   ||   shipRef_store.controls['shipName'].touched) ">
+
+                        <span [hidden]="!shipRef_store.controls['shipName'].errors?.['required']">Ship Name is required<br></span>
+                </div> <br>
+
+                <!-- shipModel field-->
+                <label class="in_page">Ship Model: </label>
+                <input type="text" class="form-control" name="shipModel" ngModel required/>
+                <div *ngIf=" shipRef_store.controls['shipModel'].invalid && 
+                            (shipRef_store.controls['shipModel'].dirty   ||   shipRef_store.controls['shipModel'].touched) ">
+
+                        <span [hidden]="!shipRef_store.controls['shipModel'].errors?.['required']">Ship Model is required<br></span>
+                </div> <br>
+
+                <!-- shipCapacity field-->
+                <label class="in_page">Ship Capacity: </label>
+                <input type="number" class="form-control" name="shipCapacity" ngModel required min="100"/>
+                <div *ngIf=" shipRef_store.controls['shipCapacity'].invalid && 
+                            (shipRef_store.controls['shipCapacity'].dirty   ||   shipRef_store.controls['shipCapacity'].touched) ">
+
+                        <span [hidden]="!shipRef_store.controls['shipCapacity'].errors?.['min']">Ship Capacity must be of minimum 100 seats<br></span>
+                        <span [hidden]="!shipRef_store.controls['shipCapacity'].errors?.['required']">Ship Capacity is required<br></span>
+                </div> <br>
+
+                <!-- shipReservationCapacity field-->
+                <label class="in_page">Ship Reservation Capacity: </label>
+                <input type="number" class="form-control" name="shipReservationCapacity" ngModel required min="50"/>
+                <div *ngIf=" shipRef_store.controls['shipReservationCapacity'].invalid && 
+                            (shipRef_store.controls['shipReservationCapacity'].dirty   ||   shipRef_store.controls['shipReservationCapacity'].touched) ">
+
+                        <span [hidden]="!shipRef_store.controls['shipReservationCapacity'].errors?.['min']">Ship Reservation Capacity must be of minimum 50 seats<br></span>
+                        <span [hidden]="!shipRef_store.controls['shipReservationCapacity'].errors?.['required']">Ship Reservation Capacity is required<br></span>
+                </div> <br>
+
+                <!-- per_kmRate field-->
+                <label class="in_page">Per km Rate: </label>
+                <input type="number" class="form-control" name="per_kmRate" ngModel required min="500"/>
+                <div *ngIf=" shipRef_store.controls['per_kmRate'].invalid && 
+                            (shipRef_store.controls['per_kmRate'].dirty   ||   shipRef_store.controls['per_kmRate'].touched) ">
+
+                        <span [hidden]="!shipRef_store.controls['per_kmRate'].errors?.['min']">Per km Rate must be of minimum 500/-<br></span>
+                        <span [hidden]="!shipRef_store.controls['per_kmRate'].errors?.['required']">Per km Rate is required<br></span>
+                </div> <br>
+        
+               
+                <div class="d-flex justify-content-center">
+                    <button type="reset" class="btn btn-primary btn-lg">&nbsp;Reset&nbsp;</button>&nbsp;
+                    <button type="submit" class="btn btn-success btn-lg" [disabled]="shipRef_store.invalid">Store Ship Details</button>
+                </div> <br><br>
+
+            </form>
+
+        </div>
+
+    </div>
+  
+
+
+<!-- ==========================================================================================================  --> 
+        <div class="text-center">
+            <br>
+            <h2 class="mt-1">All Stored Ship Details</h2>
+        </div>
+
+        <!--================================ : Retrive Operation : =====================================-->
+        <!--  <input type="button" value="See Product" (click)="getAllUser()">  -->
+        <!-- <span style="color:red">{{storeMsg}}</span> -->
+         <!-- Search Operation | Normal -->
+        <div class="container search-box" class="text-center">
+            <label><b style="color:white;">Search Ship: </b></label>&nbsp;
+            <label><input type = "text" name="search" [(ngModel)]="searchText" placeholder ="Enter here" /></label> <br>
+        </div> 
+        <table class="table table-striped table-hover">
+            <tr>
+                <th>Ship Id</th>
+                <th>Ship Name</th>
+                <th>Ship Model</th>
+                <th>Ship Capacity</th>
+                <th>Ship Reservation Capacity</th>
+                <th>Per km-Rate</th>
+                <th>Delete</th>
+                <th>Update</th>
+            </tr>
+            <tr *ngFor="let sd of ship_details | filter:searchText"> 
+                <td>{{sd.shipId}}</td>
+                <td>{{sd.shipName}}</td>
+                <td>{{sd.shipModel}}</td>
+                <td>{{sd.shipCapacity}}</td>
+                <td>{{sd.shipReservationCapacity}}</td>
+                <td>{{sd.per_kmRate}}</td>
+                <!--=============== Delete Operation ============-->
+                <td><button class="btn btn-warning" (click)="delete_ShipDetails(sd.shipId)">Delete</button></td> 
+                <td>  <!--===============- Button trigger modal for Update =============-->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal_update_shipDetails" (click)="get_record_for_update(sd)">Update</button>
+                </td>  
+            </tr>
+        </table>
+
+
+        <!--========================= : Modal for Update : ===============================-->
+        <div class="modal fade" id="exampleModal_update_shipDetails" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                
+                <div class="modal-header">
+                <h4>Update Ship Details</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div>
+                        <form #shipRef_update="ngForm" (ngSubmit)="update_routeDetails()">
+                            <label class="model_page">Ship Id: </label>
+                            <input type="text" name="shipId" class="form-control" [(ngModel)]="shipId" readonly/><br/>
+
+                            <label class="model_page">Ship Name: </label>
+                            <input type="text" name="shipName" class="form-control" [(ngModel)]="shipName" ngModel required/>
+                            <div *ngIf=" shipRef_update.controls['shipName'].invalid && 
+                                        (shipRef_update.controls['shipName'].dirty   ||   shipRef_update.controls['shipName'].touched) ">
+
+                                    <span [hidden]="!shipRef_store.controls['shipName'].errors?.['required']">Ship Name is required<br></span>
+                            </div> <br>
+
+                            <label class="model_page">Ship Model: </label>
+                            <input type="text" name="shipModel" class="form-control" [(ngModel)]="shipModel" ngModel required/>
+                            <div *ngIf=" shipRef_update.controls['shipModel'].invalid && 
+                                        (shipRef_update.controls['shipModel'].dirty   ||   shipRef_update.controls['shipModel'].touched) ">
+
+                                    <span [hidden]="!shipRef_store.controls['shipModel'].errors?.['required']">Ship Model is required<br></span>
+                            </div> <br>
+
+                            <label class="model_page">Ship Capacity: </label>
+                            <input type="number" name="shipCapacity" class="form-control" [(ngModel)]="shipCapacity" ngModel required min="50"/>
+                            <div *ngIf=" shipRef_update.controls['shipCapacity'].invalid && 
+                                        (shipRef_update.controls['shipCapacity'].dirty   ||   shipRef_update.controls['shipCapacity'].touched) ">
+
+                                    <span [hidden]="!shipRef_update.controls['shipCapacity'].errors?.['required']">Ship Capacity is required<br></span>
+                                    <span [hidden]="!shipRef_update.controls['shipCapacity'].errors?.['min']">Ship Capacity must be of minimum 50 seats<br></span>
+                            </div> <br>
+
+                            <label class="model_page">Ship Reservation Capacity: </label>
+                            <input type="number" name="shipReservationCapacity" class="form-control" [(ngModel)]="shipReservationCapacity" ngModel required min="25"/>
+                            <div *ngIf=" shipRef_update.controls['shipReservationCapacity'].invalid && 
+                                        (shipRef_update.controls['shipReservationCapacity'].dirty   ||   shipRef_update.controls['shipReservationCapacity'].touched) ">
+
+                                    <span [hidden]="!shipRef_update.controls['shipReservationCapacity'].errors?.['required']">Ship Reservation Capacity is required<br></span>
+                                    <span [hidden]="!shipRef_update.controls['shipReservationCapacity'].errors?.['min']">Ship Reservation Capacity must be of minimum 25 seats<br></span>
+                            </div> <br>
+
+                            <label class="model_page">Per Km Rate: </label>
+                            <input type="number" name="per_kmRate" class="form-control" [(ngModel)]="per_kmRate" ngModel required min="500"/>
+                            <div *ngIf=" shipRef_update.controls['per_kmRate'].invalid && 
+                                        (shipRef_update.controls['per_kmRate'].dirty   ||   shipRef_update.controls['per_kmRate'].touched) ">
+
+                                        <span [hidden]="!shipRef_update.controls['per_kmRate'].errors?.['min']">Per km Rate must be of minimum 500/-<br></span>
+                                        <span [hidden]="!shipRef_update.controls['per_kmRate'].errors?.['required']">Per km Rate is required<br></span>
+                            </div> <br>
+
+                            <input type="submit" class="btn btn-success" value="Click to Update Route Details" [disabled]="shipRef_update.invalid"/>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            </div>
+        </div> <br><br>
+
+</div>
+

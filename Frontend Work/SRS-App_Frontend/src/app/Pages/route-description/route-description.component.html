@@ -1,0 +1,166 @@
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-1" (click)="admin_home_page()"><i class='fas fa-home' style='font-size:38px;color:rgb(214, 223, 245)'></i></div>
+
+        <div class="col-6 offset-2">
+
+            <div class="text-center">
+                <br>
+                <img id="logo" width=230 src="../../../assets/register_logo.png" alt="register_logo.jpg"><br>
+                <h2 class="mt-1">Store Route Description</h2>
+            </div>
+
+            <form #routeRef_store="ngForm" (ngSubmit)="store_RouteDetails(routeRef_store)">  <!-- Template DF -->
+                <!-- <label>PId </label>
+                <input type="number" name="pid" ngModel required placeholder="Use random number"/><br/> -->
+
+                <!-- routeId field -->
+                <label class="in_page">Route Id:  </label>
+                <input type="text" class="form-control" name="routeId" ngModel required minlength="4" placeholder="R00.." pattern="[R]+[0]+[0]+[0-9]*"/>
+                <div *ngIf=" routeRef_store.controls['routeId'].invalid && 
+                            (routeRef_store.controls['routeId'].dirty   ||   routeRef_store.controls['routeId'].touched) ">
+
+                        <span [hidden]="!routeRef_store.controls['routeId'].errors?.['minlength']">Route Id must be contain 4 characters<br></span>
+                        <span [hidden]="!routeRef_store.controls['routeId'].errors?.['required']">Route Id is required<br></span>
+                        <span [hidden]="!routeRef_store.controls['routeId'].errors?.['pattern']">Route Id pattern must be matched with R00..</span>
+                </div> <br>
+
+                <!-- sourcePoint field-->
+                <label class="in_page">Source Point: </label>
+                <input type="text" class="form-control" name="sourcePoint" ngModel required/>
+                <div *ngIf=" routeRef_store.controls['sourcePoint'].invalid && 
+                            (routeRef_store.controls['sourcePoint'].dirty   ||   routeRef_store.controls['sourcePoint'].touched) ">
+
+                        <span [hidden]="!routeRef_store.controls['sourcePoint'].errors?.['required']">Source Point is required<br></span>
+                </div> <br>
+
+                <!-- destinationPoint field-->
+                <label class="in_page">Destination Point: </label>
+                <input type="text" class="form-control" name="destinationPoint" ngModel required/>
+                <div *ngIf=" routeRef_store.controls['destinationPoint'].invalid && 
+                            (routeRef_store.controls['destinationPoint'].dirty   ||   routeRef_store.controls['destinationPoint'].touched) ">
+
+                        <span [hidden]="!routeRef_store.controls['destinationPoint'].errors?.['required']">Destination Point is required<br></span>
+                </div> <br>
+
+                <!-- distanceKm field-->
+                <label class="in_page">Distance in Km: </label>
+                <input type="number" class="form-control" name="distanceKm" ngModel required min="10"/>
+                <div *ngIf=" routeRef_store.controls['distanceKm'].invalid && 
+                            (routeRef_store.controls['distanceKm'].dirty   ||   routeRef_store.controls['distanceKm'].touched) ">
+
+                        <span [hidden]="!routeRef_store.controls['distanceKm'].errors?.['min']">Distance in Km must be of minimum 10<br></span>
+                        <span [hidden]="!routeRef_store.controls['distanceKm'].errors?.['required']">Distance in Km is required<br></span>
+                </div> <br>
+        
+               
+                <div class="d-flex justify-content-center">
+                    <button type="reset" class="btn btn-primary btn-lg">&nbsp;Reset&nbsp;</button>&nbsp;
+                    <button type="submit" class="btn btn-success btn-lg" [disabled]="routeRef_store.invalid">Store Route Details</button>
+                </div> <br><br>
+
+            </form>
+
+        </div>
+
+    </div>
+  <!-- </div> -->
+
+
+ <!-- ================================================================================================================  --> 
+ <!-- ================================================================================================================  --> 
+ <!-- ================================================================================================================  --> 
+
+
+ <!-- <div class="container-fluid"> -->
+
+    <div class="text-center">
+        <br>
+        <h2 class="mt-1">All Stored Route Description</h2>
+    </div>
+
+    <!--================================ : Retrive Operation : =====================================-->
+    <!-- Search Operation | Normal -->
+    <div class="container search-box" class="text-center">
+        <label><b style="color:white;">Search Route: </b></label>&nbsp;
+        <label><input type = "text" name="search" [(ngModel)]="searchText" placeholder ="Enter here" /></label> <br>
+    </div> 
+    <!--  <input type="button" value="See Product" (click)="getAllUser()">  -->
+    <!-- <span style="color:red">{{storeMsg}}</span> -->
+    <table class="table table-striped table-hover">
+        <tr>
+            <th>Route Id</th>
+            <th>Source Point</th>
+            <th>Destination Point</th>
+            <th>Distance in Km</th>
+            <th>Delete</th>
+            <th>Update</th>
+        </tr>
+        <tr *ngFor="let rds of route_details | filter:searchText"> 
+            <td>{{rds.routeId}}</td>
+            <td>{{rds.sourcePoint}}</td>
+            <td>{{rds.destinationPoint}}</td>
+            <td>{{rds.distanceKm}}</td>
+            <!--=============== Delete Operation ============-->
+            <td><button class="btn btn-warning" (click)="deleteRoute_Details(rds.routeId)">Delete</button></td>
+            <td>  <!--===============- Button trigger modal for Update =============-->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal_update_routeDetails" (click)="get_record_for_update(rds)">Update</button>
+            </td>     
+        </tr>
+    </table>
+
+
+    <!--========================= : Modal for Update : ===============================-->
+    <div class="modal fade" id="exampleModal_update_routeDetails" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            
+            <div class="modal-header">
+            <h4>Update Route Details</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div>
+                    <form #routeRef_update="ngForm" (ngSubmit)="update_routeDetails()">
+                        <label class="model_page">Route Id: </label>
+                        <input type="text" name="routeId" class="form-control" [(ngModel)]="routeId" readonly/><br/>
+
+                        <label class="model_page">Source Point: </label>
+                        <input type="text" name="sourcePoint" class="form-control" [(ngModel)]="sourcePoint" ngModel required/>
+                        <div *ngIf=" routeRef_update.controls['sourcePoint'].invalid && 
+                                    (routeRef_update.controls['sourcePoint'].dirty   ||   routeRef_update.controls['sourcePoint'].touched) ">
+
+                            <span [hidden]="!routeRef_update.controls['sourcePoint'].errors?.['required']">Source Point is required<br></span>
+                        </div> <br>
+
+                        <label class="model_page">Destination Point: </label>
+                        <input type="text" name="destinationPoint" class="form-control" [(ngModel)]="destinationPoint" ngModel required/>
+                        <div *ngIf=" routeRef_update.controls['destinationPoint'].invalid && 
+                                    (routeRef_update.controls['destinationPoint'].dirty   ||   routeRef_update.controls['destinationPoint'].touched) ">
+
+                            <span [hidden]="!routeRef_update.controls['destinationPoint'].errors?.['required']">Destination Point is required<br></span>
+                        </div> <br>
+
+
+                        <label class="model_page">Distance in Km: </label>
+                        <input type="number" name="distanceKm" class="form-control" [(ngModel)]="distanceKm" ngModel required min="10"/>
+                        <div *ngIf=" routeRef_update.controls['distanceKm'].invalid && 
+                                    (routeRef_update.controls['distanceKm'].dirty   ||   routeRef_update.controls['distanceKm'].touched) ">
+
+                                <span [hidden]="!routeRef_update.controls['distanceKm'].errors?.['min']">Distance in Km must be of minimum 10<br></span>
+                                <span [hidden]="!routeRef_update.controls['distanceKm'].errors?.['required']">Distance in Km is required<br></span>
+                        </div> <br>
+
+                        <input type="submit" class="btn btn-success" value="Click to Update Route Details" [disabled]="routeRef_update.invalid"/>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+        </div>
+    </div> <br><br>
+
+
+</div>

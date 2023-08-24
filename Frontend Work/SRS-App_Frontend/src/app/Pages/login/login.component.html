@@ -1,0 +1,54 @@
+<!--=========================================== Template DForm ====================================================-->   
+<div class="container-fluid">
+  <div class="row">
+
+      <div class="col-6 offset-3">
+        <!-- <mat-card class="example-card"> -->
+  
+          <div class="text-center">
+              <br>
+              <img id="logo" width=240 src="../../../assets/login_logo.png" alt="login_logo.jpg"><br>
+              <h2 class="mt-1">Login Page</h2>
+          </div>
+  
+          <form #loginRef="ngForm" (ngSubmit)="loginUser(loginRef)">
+            <label>Email: </label>
+                <input type="email" name="pEmail" ngModel required minlength="3" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" placeholder="Enter email...">
+                <div *ngIf=" loginRef.controls['pEmail'].invalid && 
+                            (loginRef.controls['pEmail'].dirty || loginRef.controls['pEmail'].touched) ">
+  
+                    <span [hidden]="!loginRef.controls['pEmail'].errors?.['required']">Email is required <br></span>
+                    <span [hidden]="!loginRef.controls['pEmail'].errors?.['minlength']">Email must be contain 3 characters <br></span>
+                    <span [hidden]="!loginRef.controls['pEmail'].errors?.['pattern']">Pattern must be matched <br></span>
+                </div>
+            
+            <br>
+            <label>Password: </label>
+                <input type="text" name="pPassword" ngModel required class="form-control" placeholder="Enter password...">
+                <div *ngIf="loginRef.controls['pPassword'].invalid && 
+                            (loginRef.controls['pPassword'].dirty || loginRef.controls['pPassword'].touched) ">
+  
+                    <span [hidden]="!loginRef.controls['pPassword'].errors?.['required']">Password is required <br></span>
+                </div>
+            <br>
+                <p><a routerLink="/register">New User? Register here</a></p>
+  
+                <div class="d-flex justify-content-center">
+                  <button type="reset" class="btn btn-primary">&nbsp;Reset&nbsp;</button>&nbsp;
+                  <button type="submit" class="btn btn-success" [disabled]="loginRef.invalid">&nbsp;Login&nbsp;</button>
+                </div> <br>
+          </form>
+
+          <br><br><br><br><br><br><br>
+  
+          <!-- <mat-card-footer>
+              <div *ngIf=progress><mat-progress-bar mode="indeterminate"></mat-progress-bar></div>
+          </mat-card-footer> -->
+  
+        <!-- </mat-card> -->
+      </div>
+  
+    </div>
+  </div> 
+  
+
