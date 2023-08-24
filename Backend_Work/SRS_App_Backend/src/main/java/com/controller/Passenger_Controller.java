@@ -180,7 +180,7 @@ public class Passenger_Controller {
 			//  http://localhost:8585/passenger/login
 		  
 			@PostMapping(value = "login")
-			public String findPassengerByEmail_Pass(@RequestBody Passenger passenger) {
+			public String login(@RequestBody Passenger passenger) {
 				
 				System.out.println("Controller: "+passenger.getpEmail());
 				//Thread.sleep(3000);
