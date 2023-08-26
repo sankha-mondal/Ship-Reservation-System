@@ -9,13 +9,22 @@ public class Email_Details {
     private String subject;
     private String attachment;
     
-    /*
-       {
+   /*  
+        For MAC:
+        {
     	"recipient": "iamsankha20@gmail.com",
     	"subject": "Project || Ship Reservation System",
     	"msgBody": "Hey,\n This is your Booking Details.\nHave a nice day.",
     	"attachment": "/Users/sankhasubhramondal/Capstone/SRS.pdf"
-		}
+        }
+		
+	For Windows:: 
+	{
+    	"recipient": "iamsankha20@gmail.com",
+    	"subject": "Project || Ship Reservation System",
+    	"msgBody": "Hey,\n This is your Booking Details.\nHave a nice day.",
+    	"attachment": "/F:/GIT/Help/Git_Tutorial.pdf"
+	}
      */
     
 	public String getRecipient() {
